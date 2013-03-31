@@ -28,7 +28,7 @@ private:
 	unordered_map< T, typename list< T >::iterator > indexing;
 };
 
-//Since I'm using templates, this has to go into the header
+//Since I'm using templates, the implementation has to go into the header
 
 template <typename T>
 void HashAccelList< T >::remove( const T& val )
