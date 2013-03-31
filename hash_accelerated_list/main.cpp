@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include <assert.h>
 
-#include "hash_accelerated_list.h"
+#include "hash_accelerated_list.hpp"
 
 void test1()
 {
