@@ -1,8 +1,10 @@
 This project implements a linked list with hash-table indexing and unique items only.
 Stores only unique items (extendable to non-uniques with worse worst-case runtime complexity)
-Search becomes O(1) for known items, but as opposed to a hash table, it keeps the item ordering.
+This data structure keeps the O(1) times of a hash table, but keeps the item ordering.
+
+In Java, this data structure is called a LinkedHashMap.
 
 TODO:
-Implement proper iterators
+Implement proper iterators and a nicer API
 Rename the class to something more sensible
 More tests
