@@ -13,7 +13,7 @@ class HashAccelList
 {
 public:
 	HashAccelList() {}
-	void HashAccelList< T >::insert( typename list< T >::const_iterator, const T& );
+	void HashAccelList< T >::insert( typename list< T >::iterator, const T& );
 	void insert_end( const T& ); //O(1), removes the previous instance of the parameter
 	void insert_begin( const T& ); //O(1), removes the previous instance of the parameter
 	void remove( const T& ); //O(1)
@@ -41,10 +41,10 @@ void HashAccelList< T >::remove( const T& val )
 }
 
 template <typename T>
-void HashAccelList< T >::insert( typename list< T >::const_iterator new_item_it, const T& val )
+void HashAccelList< T >::insert( typename list< T >::iterator new_item_it, const T& val )
 {
 	unordered_map< T, typename list< T >::iterator >::iterator hash_item = indexing.find( val );
-	ordered_list.insert( val, it );
+	ordered_list.insert( new_item_it, val );
 	if( hash_item != indexing.end() )
 	{
 		ordered_list.erase( hash_item->second );
@@ -66,18 +66,16 @@ void HashAccelList< T >::insert_begin( const T& val )
 template <typename T>
 void HashAccelList< T >::insert_end( const T& val )
 {
-	unordered_map< T, typename list< T >::iterator >::iterator hash_item = indexing.find( val );
-	ordered_list.push_back( val ); //add new value
-	list< T >::iterator new_item_it = -- (ordered_list.end());
-	if( hash_item != indexing.end() )
+	list< T >::iterator new_item_it;
+	if( ordered_list.size() == 0 )
 	{
-		ordered_list.erase( hash_item->second );
-		hash_item->second = new_item_it;
+		new_item_it = ordered_list.end();
 	}
 	else
 	{
-		indexing.insert( make_pair( val, new_item_it ) );
+		new_item_it = -- (ordered_list.end());
 	}
+	insert( new_item_it, val );
 }
 
 template <typename T>
