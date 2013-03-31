@@ -27,8 +27,6 @@ private:
 
 //Since I'm using templates, this has to go into the header
 
-
-
 template <typename T>
 void HashAccelList< T >::remove( const T& val )
 {
@@ -69,15 +67,7 @@ void HashAccelList< T >::insert_begin( const T& val )
 template <typename T>
 void HashAccelList< T >::insert_end( const T& val )
 {
-	list< T >::iterator new_item_it;
-	//if( ordered_list.size() == 0 )
-	//{
-		new_item_it = ordered_list.end();
-	//}
-	//else
-	//{
-	//	new_item_it = -- (ordered_list.end());
-	//}
+	list< T >::iterator new_item_it = ordered_list.end();
 	insert( new_item_it, val );
 }
 
