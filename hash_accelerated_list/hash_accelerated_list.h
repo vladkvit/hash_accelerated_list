@@ -22,6 +22,8 @@ public:
 	void remove( const T& ); //O(1)
 	typename list< T >::const_iterator begin() const; //O(1)
 	typename list< T >::const_iterator end() const; //O(1)
+	typename list< T >::iterator begin(); //O(1)
+	typename list< T >::iterator end(); //O(1)
 
 private:
 	list< T > ordered_list;
@@ -81,6 +83,18 @@ typename list< T >::const_iterator HashAccelList< T >::begin() const
 
 template <typename T>
 typename list< T >::const_iterator HashAccelList< T >::end() const
+{
+	return ordered_list.end();
+}
+
+template <typename T>
+typename list< T >::iterator HashAccelList< T >::begin()
+{
+	return ordered_list.begin();
+}
+
+template <typename T>
+typename list< T >::iterator HashAccelList< T >::end()
 {
 	return ordered_list.end();
 }

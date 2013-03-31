@@ -30,7 +30,22 @@ void test1()
 
 void test2()
 {
+	const int out_arr[] = { 2, -1, 4 }; //wanted output
+	
+	HashAccelList< int > mylist;
+	mylist.insert_end( 4 );
+	mylist.insert_begin( 2 );
+	list< int >::iterator it = mylist.end();
+	it--;
+	mylist.insert( it, -1 );
 
+	list< int >::const_iterator l_begin = mylist.begin();
+	list< int >::const_iterator l_end = mylist.end();
+	for( int i = 0; l_begin != l_end; ++l_begin, i++ )
+	{
+		//assert( false ) triggers the assert
+		assert( (*l_begin) == out_arr[i] );
+	}
 }
 
 int _tmain(int argc, _TCHAR* argv[])
