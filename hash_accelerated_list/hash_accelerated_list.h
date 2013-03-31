@@ -13,9 +13,12 @@ class HashAccelList
 {
 public:
 	HashAccelList() {}
+
+	//the inserts are O(1), they also remove the previous instance of the parameter
 	void HashAccelList< T >::insert( typename list< T >::iterator, const T& );
-	void insert_end( const T& ); //O(1), removes the previous instance of the parameter
-	void insert_begin( const T& ); //O(1), removes the previous instance of the parameter
+	void insert_end( const T& );
+	void insert_begin( const T& );
+
 	void remove( const T& ); //O(1)
 	typename list< T >::const_iterator begin() const; //O(1)
 	typename list< T >::const_iterator end() const; //O(1)
@@ -44,7 +47,6 @@ void HashAccelList< T >::insert( typename list< T >::iterator new_item_it, const
 	//get the old value
 	unordered_map< T, typename list< T >::iterator >::iterator hash_item = indexing.find( val );
 	
-	//insert the new value
 	new_item_it = ordered_list.insert( new_item_it, val );
 	if( hash_item != indexing.end() )
 	{
