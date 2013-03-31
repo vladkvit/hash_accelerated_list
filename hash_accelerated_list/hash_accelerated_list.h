@@ -43,8 +43,11 @@ void HashAccelList< T >::remove( const T& val )
 template <typename T>
 void HashAccelList< T >::insert( typename list< T >::iterator new_item_it, const T& val )
 {
+	//get the old value
 	unordered_map< T, typename list< T >::iterator >::iterator hash_item = indexing.find( val );
-	ordered_list.insert( new_item_it, val );
+	
+	//insert the new value
+	new_item_it = ordered_list.insert( new_item_it, val );
 	if( hash_item != indexing.end() )
 	{
 		ordered_list.erase( hash_item->second );
@@ -67,14 +70,14 @@ template <typename T>
 void HashAccelList< T >::insert_end( const T& val )
 {
 	list< T >::iterator new_item_it;
-	if( ordered_list.size() == 0 )
-	{
+	//if( ordered_list.size() == 0 )
+	//{
 		new_item_it = ordered_list.end();
-	}
-	else
-	{
-		new_item_it = -- (ordered_list.end());
-	}
+	//}
+	//else
+	//{
+	//	new_item_it = -- (ordered_list.end());
+	//}
 	insert( new_item_it, val );
 }
 
