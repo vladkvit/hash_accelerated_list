@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8F9309CA-8F61-42C9-B5AB-ABB7B0044277}</ProjectGuid>
+    <ProjectGuid>{77A0626C-223A-46C8-B992-20F0821A976F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>hash_accelerated_list</RootNamespace>
+    <RootNamespace>multi_hash_accelerated_list</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)/hash_accelerated_list;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -79,7 +80,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hash_accelerated_list.hpp" />
+    <ClInclude Include="..\hash_accelerated_list\hash_accelerated_list.hpp" />
+    <ClInclude Include="multi_hash_accelerated_list.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
