@@ -3,12 +3,16 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <boost_path>C:\Program Files\boost\boost_1_53_0</boost_path>
+    <boost_linker_path>$(boost_path)\stage\lib</boost_linker_path>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
     <BuildMacro Include="boost_path">
       <Value>$(boost_path)</Value>
+    </BuildMacro>
+    <BuildMacro Include="boost_linker_path">
+      <Value>$(boost_linker_path)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
