@@ -6,6 +6,12 @@
 #include <list>
 #include <unordered_map>
 
+#define USE_BOOST
+#ifdef USE_BOOST
+#include <boost/config.hpp>
+#include <boost/iterator.hpp>
+#endif
+
 using namespace std;
 
 template <typename T>
