@@ -2,14 +2,15 @@
 // Stores only unique items (extendable to non-uniques with worse worst-case runtime complexity)
 // Search becomes O(1) for known items, but as opposed to a hash table, 
 // it keeps the item ordering
-
+/*
 #include <list>
 #include <unordered_map>
 
 #define USE_BOOST
 #ifdef USE_BOOST
-#include <boost/config.hpp>
-#include <boost/iterator.hpp>
+//#include <boost/config.hpp>
+//#include <boost/iterator.hpp>
+#include <boost/iterator/iterator_adaptor.hpp>
 #endif
 
 using namespace std;
@@ -26,14 +27,45 @@ public:
 	void insert_begin( const T& );
 
 	void remove( const T& ); //O(1)
-	typename list< T >::const_iterator begin() const; //O(1)
-	typename list< T >::const_iterator end() const; //O(1)
-	typename list< T >::iterator begin(); //O(1)
-	typename list< T >::iterator end(); //O(1)
+
+	//typename list< T >::const_iterator begin() const; //O(1)
+	//typename list< T >::const_iterator end() const; //O(1)
+	//typename list< T >::iterator begin(); //O(1)
+	//typename list< T >::iterator end(); //O(1)
 
 private:
 	list< T > ordered_list;
 	unordered_map< T, typename list< T >::iterator > indexing;
+
+public:
+	class h_iterator : boost::iterator_adaptor<
+		h_iterator,
+		list< T >::iterator,
+		boost::use_default,
+		boost::bidirectional_traversal_tag >
+	{
+	private:
+
+		typedef boost::iterator_adaptor<
+			h_iterator,
+			list< T >::iterator,
+			boost::use_default,
+			boost::bidirectional_traversal_tag
+		> super_t;
+
+	public:
+		node_iter()
+		: super_t(0) {}
+
+		explicit node_iter(Value* p)
+		: super_t(p) {}
+
+		void increment() {  this->base_reference() = this->base() + 1; }
+
+		//struct enabler {}; //what is this needed for?
+
+//		list< T >::iterator list_it;
+	};
 };
 
 //Since I'm using templates, the implementation has to go into the header
@@ -80,27 +112,59 @@ void HashAccelList< T >::insert_end( const T& val )
 	list< T >::iterator new_item_it = ordered_list.end();
 	insert( new_item_it, val );
 }
+*/
+
+
+#include <boost/iterator/iterator_adaptor.hpp>
+#include <list>
+
+using namespace std;
 
 template <typename T>
-typename list< T >::const_iterator HashAccelList< T >::begin() const
+class HashAccelList
 {
-	return ordered_list.begin();
-}
+public:
+	//static const int ARR_SZ = 10;
+	//T myarr[ARR_SZ];
+	list<T> myl;
 
-template <typename T>
-typename list< T >::const_iterator HashAccelList< T >::end() const
-{
-	return ordered_list.end();
-}
+public:
+	
+	class h_iterator : public
+		boost::iterator_adaptor<
+		h_iterator,
+		typename list<T>::iterator,
+		boost::use_default,
+		boost::bidirectional_traversal_tag >
+	{
+	private:
 
-template <typename T>
-typename list< T >::iterator HashAccelList< T >::begin()
-{
-	return ordered_list.begin();
-}
+		typedef boost::iterator_adaptor<
+			h_iterator,
+			typename list<T>::iterator,
+			boost::use_default,
+			boost::bidirectional_traversal_tag
+		> super_t;
 
-template <typename T>
-typename list< T >::iterator HashAccelList< T >::end()
-{
-	return ordered_list.end();
-}
+	public:
+		h_iterator()
+		: super_t(0) {}
+
+		explicit h_iterator( typename list<T>::iterator p)
+		: super_t(p) {}
+
+		void increment() {  this->base_reference() = this->base() + 1; }
+		void decrement() {  this->base_reference() = this->base() - 1; }
+
+	};
+
+	h_iterator begin()
+	{
+		return h_iterator( myl.begin() );
+	}
+
+	h_iterator end()
+	{
+		return h_iterator( myl.end() );
+	}
+};
