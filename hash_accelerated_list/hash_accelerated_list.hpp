@@ -153,8 +153,8 @@ public:
 		explicit h_iterator( typename list<T>::iterator p)
 		: super_t(p) {}
 
-		void increment() {  this->base_reference() = this->base() + 1; }
-		void decrement() {  this->base_reference() = this->base() - 1; }
+		void increment() {  this->base_reference()++; }
+		void decrement() {  this->base_reference()--; }
 
 	};
 

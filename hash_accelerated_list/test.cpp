@@ -58,19 +58,20 @@ void test3()
 	}
 	
 	printf( "%d\n", mylist.myl.front() );
-	HashAccelList< int >::h_iterator my_iterator( );
+	HashAccelList< int >::h_iterator my_iterator( mylist.myl.begin() );
 	printf( "%d\n", *my_iterator );
 	printf("\n");
 	
-	printf( "%d\n", mylist.myl.front() + 1 );
-	my_iterator = my_iterator + 1;
-	my_iterator++;
+	printf( "%d\n", mylist.myl.front() );
+	my_iterator = mylist.begin();
 	++my_iterator;
 	printf( "%d\n", *my_iterator );
 	printf("\n");
 
-	printf("%d\n", mylist.myarr[10 - 1] );
+	printf("%d\n", mylist.myl.back() );
 	my_iterator = mylist.end();
+	--my_iterator; //end is not the last element
+	printf( "%d\n", *my_iterator );
 	--my_iterator;
 	printf( "%d\n", *my_iterator );
 	printf("\n");
