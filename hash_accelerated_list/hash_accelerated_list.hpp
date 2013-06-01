@@ -38,9 +38,10 @@ private:
 	unordered_map< T, typename list< T >::iterator > indexing;
 
 public:
-	class h_iterator : boost::iterator_adaptor<
+class h_iterator : public
+		boost::iterator_adaptor<
 		h_iterator,
-		list< T >::iterator,
+		typename list<T>::iterator,
 		boost::use_default,
 		boost::bidirectional_traversal_tag >
 	{
@@ -48,24 +49,33 @@ public:
 
 		typedef boost::iterator_adaptor<
 			h_iterator,
-			list< T >::iterator,
+			typename list<T>::iterator,
 			boost::use_default,
 			boost::bidirectional_traversal_tag
 		> super_t;
 
 	public:
-		node_iter()
+		h_iterator()
 		: super_t(0) {}
 
-		explicit node_iter(Value* p)
+		explicit h_iterator( typename list<T>::iterator p)
 		: super_t(p) {}
 
-		void increment() {  this->base_reference() = this->base() + 1; }
+		void increment() {  this->base_reference()++; }
+		void decrement() {  this->base_reference()--; }
 
-		//struct enabler {}; //what is this needed for?
-
-//		list< T >::iterator list_it;
 	};
+
+	h_iterator begin()
+	{
+		return h_iterator( ordered_list.begin() );
+	}
+
+	h_iterator end()
+	{
+		return h_iterator( ordered_list.end() );
+	}
+
 };
 
 //Since I'm using templates, the implementation has to go into the header
