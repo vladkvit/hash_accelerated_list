@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <algorithm>
 
+#include <set>
+
 #include "hash_accelerated_list.hpp"
 
 void test1()
@@ -96,11 +98,24 @@ void test3()
 
 }
 
+void test4()
+{
+	set<int> myset;
+	myset.insert( 5 );
+	myset.insert( 1 );
+	myset.insert( 3 );
+
+	set<int>::iterator it = myset.begin();
+
+
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	test1();
 	test2();
 	test3();
+	test4();
 
 	return 0;
 }

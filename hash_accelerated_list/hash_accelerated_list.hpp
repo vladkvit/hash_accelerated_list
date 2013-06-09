@@ -166,6 +166,37 @@ public:
 		void increment() {  this->base_reference()++; }
 		void decrement() {  this->base_reference()--; }
 
+		T& operator*()
+		{
+			return *(this->base_reference());
+		}
+	};
+
+	class h_const_iterator : public
+		boost::iterator_adaptor<
+		h_const_iterator,
+		typename list<T>::const_iterator,
+		boost::use_default,
+		boost::bidirectional_traversal_tag >
+	{
+	private:
+
+		typedef boost::iterator_adaptor<
+			h_const_iterator,
+			typename list<T>::const_iterator,
+			boost::use_default,
+			boost::bidirectional_traversal_tag
+		> super_t;
+
+	public:
+		h_const_iterator()
+		: super_t(0) {}
+
+		explicit h_const_iterator( typename list<T>::const_iterator p)
+		: super_t(p) {}
+
+		void increment() {  this->base_reference()++; }
+		void decrement() {  this->base_reference()--; }
 	};
 
 	h_iterator begin()
@@ -176,5 +207,15 @@ public:
 	h_iterator end()
 	{
 		return h_iterator( myl.end() );
+	}
+
+	h_const_iterator begin() const
+	{
+		return h_const_iterator( myl.begin() );
+	}
+
+	h_const_iterator end() const
+	{
+		return h_const_iterator( myl.end() );
 	}
 };
