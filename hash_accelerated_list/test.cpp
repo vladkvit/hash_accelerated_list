@@ -95,7 +95,6 @@ void test3()
 	}
 	printf("\n");
 
-
 }
 
 void test4()
@@ -110,12 +109,25 @@ void test4()
 
 }
 
+void test5()
+{
+	HashAccelList< int > mylist;
+	for( int i = 0; i < 10; i++ )
+	{
+		mylist.myl.push_back( i + 1000 );
+	}
+
+	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.cbegin();
+
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	test1();
 	test2();
 	test3();
 	test4();
+	test5();
 
 	return 0;
 }
