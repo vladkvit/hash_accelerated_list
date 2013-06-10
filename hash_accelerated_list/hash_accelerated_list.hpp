@@ -130,6 +130,9 @@ void HashAccelList< T >::insert_end( const T& val )
 
 using namespace std;
 
+//forward declaration
+class h_const_iterator;
+
 template <typename T>
 class HashAccelList
 {
@@ -139,7 +142,7 @@ public:
 	list<T> myl;
 
 public:
-	
+
 	class h_iterator : public
 		boost::iterator_adaptor<
 		h_iterator,
@@ -147,8 +150,9 @@ public:
 		boost::use_default,
 		boost::bidirectional_traversal_tag >
 	{
-	private:
+		friend class h_const_iterator;
 
+	private:
 		typedef boost::iterator_adaptor<
 			h_iterator,
 			typename list<T>::iterator,
@@ -163,18 +167,37 @@ public:
 		void increment() { this->base_reference()++; }
 		void decrement() { this->base_reference()--; }
 
-		T& operator*()
+		const T& operator*()
 		{
-			return *(this->base_reference());
+			list<T>::const_iterator it = this->base_reference();
+			return *(it);
 		}
 	};
 
 	class h_const_iterator : public
-		h_iterator
+		boost::iterator_adaptor<
+		h_const_iterator,
+		typename list<T>::const_iterator,
+		boost::use_default,
+		boost::bidirectional_traversal_tag >
 	{
+	private:
+		typedef boost::iterator_adaptor<
+			h_const_iterator,
+			typename list<T>::const_iterator,
+			boost::use_default,
+			boost::bidirectional_traversal_tag
+		> super_t;
+
 	public:
-		h_const_iterator( typename list<T>::iterator p ) : h_iterator( p )  {}
-		//h_const_iterator( typename list<T>::const_iterator p ) : h_iterator( p ) {}
+		explicit h_const_iterator( typename list<T>::const_iterator p )
+		: super_t(p) {}
+
+		h_const_iterator( const h_iterator& or_it ) : super_t( or_it.base_reference() )
+		{}
+
+		void increment() { this->base_reference()++; }
+		void decrement() { this->base_reference()--; }
 
 		const T& operator*() const
 		{
@@ -192,7 +215,7 @@ public:
 		return h_iterator( myl.end() );
 	}
 
-	h_const_iterator cbegin() const
+	h_const_iterator begin() const
 	{
 		return h_const_iterator( myl.begin() );
 	}

@@ -86,9 +86,9 @@ void test3()
 	}
 	printf("\n");
 
+	/*next_permutation( mylist.begin(), mylist.end() );
 	next_permutation( mylist.begin(), mylist.end() );
-	next_permutation( mylist.begin(), mylist.end() );
-	next_permutation( mylist.begin(), mylist.end() );
+	next_permutation( mylist.begin(), mylist.end() );*/
 	for( my_iterator = mylist.begin(); my_iterator != mylist.end(); ++my_iterator )
 	{
 		printf( "%d\n", *my_iterator );
@@ -104,8 +104,10 @@ void test4()
 	myset.insert( 1 );
 	myset.insert( 3 );
 
-	set<int>::iterator it = myset.begin();
+	//next_permutation( myset.begin(), myset.end() );
 
+	set<int>::iterator it = myset.begin();
+	set<int>::const_iterator it2 = myset.begin();
 
 }
 
@@ -117,7 +119,7 @@ void test5()
 		mylist.myl.push_back( i + 1000 );
 	}
 
-	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.cbegin();
+	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.begin();
 
 }
 
