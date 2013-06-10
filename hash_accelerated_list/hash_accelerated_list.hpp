@@ -175,29 +175,12 @@ public:
 	};
 
 	class h_const_iterator : public
-		boost::iterator_adaptor<
-		h_const_iterator,
-		typename list<T>::const_iterator,
-		boost::use_default,
-		boost::bidirectional_traversal_tag >
+		h_iterator
 	{
-	private:
-		typedef boost::iterator_adaptor<
-			h_const_iterator,
-			typename list<T>::const_iterator,
-			boost::use_default,
-			boost::bidirectional_traversal_tag
-		> super_t;
-
 	public:
-		explicit h_const_iterator( typename list<T>::const_iterator p )
-		: super_t(p) {}
-
-		h_const_iterator( const h_iterator& or_it ) : super_t( or_it.base_reference() )
-		{}
-
-		void increment() { this->base_reference()++; }
-		void decrement() { this->base_reference()--; }
+		h_const_iterator( typename list<T>::iterator p ) : h_iterator( p )  {}
+		//h_const_iterator( typename list<T>::const_iterator p ) : h_iterator( p ) {}
+		h_const_iterator( h_iterator& it ) : h_iterator( it.base_reference() ) {}
 
 		const T& operator*() const
 		{
