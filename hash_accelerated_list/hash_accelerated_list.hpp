@@ -130,6 +130,9 @@ void HashAccelList< T >::insert_end( const T& val )
 
 using namespace std;
 
+//forward declaration
+class h_const_iterator;
+
 template <typename T>
 class HashAccelList
 {
@@ -147,6 +150,8 @@ public:
 		boost::use_default,
 		boost::bidirectional_traversal_tag >
 	{
+		friend class h_const_iterator;
+
 	private:
 
 		typedef boost::iterator_adaptor<
@@ -175,6 +180,7 @@ public:
 	public:
 		h_const_iterator( typename list<T>::iterator p ) : h_iterator( p )  {}
 		//h_const_iterator( typename list<T>::const_iterator p ) : h_iterator( p ) {}
+		h_const_iterator( h_iterator& it ) : h_iterator( it.base_reference() ) {}
 
 		const T& operator*() const
 		{
@@ -192,7 +198,7 @@ public:
 		return h_iterator( myl.end() );
 	}
 
-	h_const_iterator cbegin() const
+	h_const_iterator begin() const
 	{
 		return h_const_iterator( myl.begin() );
 	}

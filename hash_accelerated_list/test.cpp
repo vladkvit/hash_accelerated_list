@@ -117,7 +117,7 @@ void test5()
 		mylist.myl.push_back( i + 1000 );
 	}
 
-	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.cbegin();
+	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.begin();
 
 }
 
