@@ -131,7 +131,6 @@ void HashAccelList< T >::insert_end( const T& val )
 using namespace std;
 
 //forward declaration
-class h_const_iterator;
 
 template <typename T>
 class HashAccelList
@@ -143,25 +142,25 @@ public:
 
 public:
 
-	class h_iterator : public
+
+	template <typename T, bool c> //c determines if it is a const_iterator or not
+	class _iterator : public
 		boost::iterator_adaptor<
-		h_iterator,
-		typename list<T>::iterator,
+		_iterator<T, c>,
+		typename std::conditional< c, typename list<T>::const_iterator, typename list<T>::iterator >::type,
 		boost::use_default,
 		boost::bidirectional_traversal_tag >
 	{
-		friend class h_const_iterator;
-
 	private:
 		typedef boost::iterator_adaptor<
-			h_iterator,
-			typename list<T>::iterator,
+			_iterator<T, c>,
+			typename std::conditional< c, typename list<T>::const_iterator, typename list<T>::iterator >::type,
 			boost::use_default,
 			boost::bidirectional_traversal_tag
 		> super_t;
 
 	public:
-		explicit h_iterator( typename list<T>::iterator p )
+		explicit _iterator( typename std::conditional<c, typename list<T>::const_iterator, typename list<T>::iterator>::type p )
 		: super_t(p) {}
 
 		void increment() { this->base_reference()++; }
@@ -174,18 +173,22 @@ public:
 		}
 	};
 
-	class h_const_iterator : public
-		h_iterator
+public:
+	typedef _iterator<T, false> h_iterator;
+	typedef _iterator<T, true> h_const_iterator;
+
+	template<>
+	class _iterator<T, false>
+	{
+		friend class _iterator<T, true>;
+	};
+
+	template<>
+	class _iterator<T, true>
 	{
 	public:
-		h_const_iterator( typename list<T>::iterator p ) : h_iterator( p )  {}
-		//h_const_iterator( typename list<T>::const_iterator p ) : h_iterator( p ) {}
-		h_const_iterator( h_iterator& it ) : h_iterator( it.base_reference() ) {}
-
-		const T& operator*() const
-		{
-			return *(this->base_reference());
-		}
+		//copy constructor
+		_iterator( _iterator<T, false>& it ) : super_t( it.base_reference() ) {}
 	};
 
 	h_iterator begin()

@@ -60,7 +60,8 @@ void test3()
 	}
 	
 	printf( "%d\n", mylist.myl.front() );
-	HashAccelList< int >::h_iterator my_iterator( mylist.myl.begin() );
+	HashAccelList<int>::_iterator<int, false> it = mylist.begin();
+	HashAccelList<int>::h_iterator my_iterator = mylist.begin();
 	printf( "%d\n", *my_iterator );
 	printf("\n");
 	
