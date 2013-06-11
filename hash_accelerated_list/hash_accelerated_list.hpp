@@ -2,7 +2,7 @@
 // Stores only unique items (extendable to non-uniques with worse worst-case runtime complexity)
 // Search becomes O(1) for known items, but as opposed to a hash table, 
 // it keeps the item ordering
-/*
+
 #include <list>
 #include <unordered_map>
 
@@ -38,33 +38,44 @@ private:
 	unordered_map< T, typename list< T >::iterator > indexing;
 
 public:
-class h_iterator : public
+	template <typename T, bool c> //c determines if it is a const_iterator or not
+	class _iterator : public
 		boost::iterator_adaptor<
-		h_iterator,
-		typename list<T>::iterator,
+		_iterator<T, c>,
+		typename std::conditional< c, typename list<T>::const_iterator, typename list<T>::iterator >::type,
 		boost::use_default,
 		boost::bidirectional_traversal_tag >
 	{
 	private:
-
 		typedef boost::iterator_adaptor<
-			h_iterator,
-			typename list<T>::iterator,
+			_iterator<T, c>,
+			typename std::conditional< c, typename list<T>::const_iterator, typename list<T>::iterator >::type,
 			boost::use_default,
 			boost::bidirectional_traversal_tag
 		> super_t;
 
 	public:
-		h_iterator()
-		: super_t(0) {}
-
-		explicit h_iterator( typename list<T>::iterator p)
+		explicit _iterator( typename std::conditional<c, typename list<T>::const_iterator, typename list<T>::iterator>::type p )
 		: super_t(p) {}
 
-		void increment() {  this->base_reference()++; }
-		void decrement() {  this->base_reference()--; }
+		//copy constructor so we can auto-convert iterators into const_iterators
+		//needed since begin() from non-const "this" only returns a non-const iterator
+		_iterator( _iterator<T, false>& it ) : super_t( it.base_reference() ) {}
 
+		void increment() { this->base_reference()++; }
+		void decrement() { this->base_reference()--; }
+
+		const T& operator*() const
+		{
+			list<T>::const_iterator it = this->base_reference();
+			return *(it);
+		}
+
+		friend class _iterator<T, true>;
 	};
+
+	typedef _iterator<T, false> h_iterator;
+	typedef _iterator<T, true> h_const_iterator;
 
 	h_iterator begin()
 	{
@@ -76,6 +87,15 @@ class h_iterator : public
 		return h_iterator( ordered_list.end() );
 	}
 
+	const h_const_iterator begin() const
+	{
+		return h_const_iterator( ordered_list.begin() );
+	}
+
+	const h_const_iterator end() const
+	{
+		return h_const_iterator( ordered_list.end() );
+	}
 };
 
 //Since I'm using templates, the implementation has to go into the header
@@ -122,9 +142,9 @@ void HashAccelList< T >::insert_end( const T& val )
 	list< T >::iterator new_item_it = ordered_list.end();
 	insert( new_item_it, val );
 }
-*/
 
 
+/*
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <list>
 
@@ -200,3 +220,4 @@ public:
 		return h_const_iterator( myl.end() );
 	}
 };
+*/

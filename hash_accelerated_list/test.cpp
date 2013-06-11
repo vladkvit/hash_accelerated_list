@@ -33,27 +33,27 @@ void test1()
 
 void test2()
 {
-	/*const int out_arr[] = { 2, -1, 4 }; //wanted output
+	const int out_arr[] = { 2, -1, 4 }; //wanted output
 	
 	HashAccelList< int > mylist;
 	mylist.insert_end( 4 );
 	mylist.insert_begin( 2 );
-	list< int >::iterator it = mylist.end();
+	HashAccelList< int >::h_iterator it = mylist.end();
 	it--;
-	mylist.insert( it, -1 );
+	//mylist.insert( it, -1 );
 
-	list< int >::const_iterator l_begin = mylist.begin();
-	list< int >::const_iterator l_end = mylist.end();
+	HashAccelList< int >::h_const_iterator l_begin = mylist.begin();
+	HashAccelList< int >::h_const_iterator l_end = mylist.end();
 	for( int i = 0; l_begin != l_end; ++l_begin, i++ )
 	{
 		//assert( false ) triggers the assert
 		assert( (*l_begin) == out_arr[i] );
-	}*/
+	}
 }
 
 void test3()
 {
-	HashAccelList< int > mylist;
+	/*HashAccelList< int > mylist;
 	for( int i = 0; i < 10; i++ )
 	{
 		mylist.myl.push_back( i + 1000 );
@@ -109,7 +109,7 @@ void test3()
 	printf("\n");
 
 	//The below should not compile if uncommented
-	//HashAccelList<int>::h_const_iterator cit2 = mylist2.begin();
+	//HashAccelList<int>::h_const_iterator cit2 = mylist2.begin();*/
 }
 
 void test4()
@@ -128,13 +128,13 @@ void test4()
 
 void test5()
 {
-	HashAccelList< int > mylist;
+	/*HashAccelList< int > mylist;
 	for( int i = 0; i < 10; i++ )
 	{
 		mylist.myl.push_back( i + 1000 );
 	}
 
-	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.begin();
+	HashAccelList< int >::h_const_iterator my_iterator2 = mylist.begin();*/
 
 }
 
