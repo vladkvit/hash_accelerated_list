@@ -141,8 +141,6 @@ public:
 	list<T> myl;
 
 public:
-
-
 	template <typename T, bool c> //c determines if it is a const_iterator or not
 	class _iterator : public
 		boost::iterator_adaptor<
@@ -163,6 +161,8 @@ public:
 		explicit _iterator( typename std::conditional<c, typename list<T>::const_iterator, typename list<T>::iterator>::type p )
 		: super_t(p) {}
 
+		_iterator( _iterator<T, false>& it ) : super_t( it.base_reference() ) {}
+
 		void increment() { this->base_reference()++; }
 		void decrement() { this->base_reference()--; }
 
@@ -171,25 +171,12 @@ public:
 			list<T>::const_iterator it = this->base_reference();
 			return *(it);
 		}
-	};
 
-public:
-	typedef _iterator<T, false> h_iterator;
-	typedef _iterator<T, true> h_const_iterator;
-
-	template<>
-	class _iterator<T, false>
-	{
 		friend class _iterator<T, true>;
 	};
 
-	template<>
-	class _iterator<T, true>
-	{
-	public:
-		//copy constructor
-		_iterator( _iterator<T, false>& it ) : super_t( it.base_reference() ) {}
-	};
+	typedef _iterator<T, false> h_iterator;
+	typedef _iterator<T, true> h_const_iterator;
 
 	h_iterator begin()
 	{
