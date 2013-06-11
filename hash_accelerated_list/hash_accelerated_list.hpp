@@ -161,12 +161,14 @@ public:
 		explicit _iterator( typename std::conditional<c, typename list<T>::const_iterator, typename list<T>::iterator>::type p )
 		: super_t(p) {}
 
+		//copy constructor so we can auto-convert iterators into const_iterators
+		//needed since begin() from non-const "this" only returns a non-const iterator
 		_iterator( _iterator<T, false>& it ) : super_t( it.base_reference() ) {}
 
 		void increment() { this->base_reference()++; }
 		void decrement() { this->base_reference()--; }
 
-		const T& operator*()
+		const T& operator*() const
 		{
 			list<T>::const_iterator it = this->base_reference();
 			return *(it);

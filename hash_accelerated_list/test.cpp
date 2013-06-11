@@ -59,43 +59,57 @@ void test3()
 		mylist.myl.push_back( i + 1000 );
 	}
 	
-	printf( "%d\n", mylist.myl.front() );
-	HashAccelList<int>::_iterator<int, false> it = mylist.begin();
+	printf( "1000, %d\n", mylist.myl.front() );
 	HashAccelList<int>::h_iterator my_iterator = mylist.begin();
-	printf( "%d\n", *my_iterator );
+	printf( "1000, %d\n", *my_iterator );
+	++my_iterator;
+	printf( "1001, %d\n", *my_iterator );
+	--my_iterator;
+	printf( "1000, %d\n", *my_iterator );
 	printf("\n");
 	
-	printf( "%d\n", mylist.myl.front() );
-	my_iterator = mylist.begin();
-	++my_iterator;
-	printf( "%d\n", *my_iterator );
-	printf("\n");
-
-	printf("%d\n", mylist.myl.back() );
+	printf("1009, %d\n", mylist.myl.back() );
 	my_iterator = mylist.end();
 	--my_iterator; //end is not the last element
-	printf( "%d\n", *my_iterator );
+	printf( "1009, %d\n", *my_iterator );
 	--my_iterator;
-	printf( "%d\n", *my_iterator );
+	printf( "1008, %d\n", *my_iterator );
 	printf("\n");
-
-
-
+	
+	int i = 1000;
 	for( my_iterator = mylist.begin(); my_iterator != mylist.end(); ++my_iterator )
 	{
-		printf( "%d\n", *my_iterator );
+		printf( "%d, %d\n", i, *my_iterator );
+		i++;
 	}
 	printf("\n");
 
-	/*next_permutation( mylist.begin(), mylist.end() );
-	next_permutation( mylist.begin(), mylist.end() );
-	next_permutation( mylist.begin(), mylist.end() );*/
-	for( my_iterator = mylist.begin(); my_iterator != mylist.end(); ++my_iterator )
-	{
-		printf( "%d\n", *my_iterator );
-	}
+	
+	printf( "1000, %d\n", mylist.myl.front() );
+	HashAccelList<int>::h_const_iterator cit = mylist.begin();
+	printf( "1000, %d\n", *cit );
+	++cit;
+	printf( "1001, %d\n", *cit );
+	--cit;
+	printf( "1000, %d\n", *cit );
 	printf("\n");
 
+	const HashAccelList< int > mylist2;
+	for( int i = 0; i < 10; i++ )
+	{
+		mylist.myl.push_back( i + 1000 );
+	}
+	printf( "1000, %d\n", mylist.myl.front() );
+	HashAccelList<int>::h_const_iterator cit2 = mylist2.begin();
+	printf( "1000, %d\n", *cit );
+	++cit;
+	printf( "1001, %d\n", *cit );
+	--cit;
+	printf( "1000, %d\n", *cit );
+	printf("\n");
+
+	//The below should not compile if uncommented
+	//HashAccelList<int>::h_const_iterator cit2 = mylist2.begin();
 }
 
 void test4()
