@@ -72,10 +72,13 @@ public:
 		}
 
 		friend class _iterator<T, true>;
+		friend class HashAccelList<T>;
 	};
 
 	typedef _iterator<T, false> h_iterator;
 	typedef _iterator<T, true> h_const_iterator;
+
+	void insert( typename HashAccelList< T >::h_iterator it, const T& val );
 
 	h_iterator begin()
 	{
@@ -127,6 +130,12 @@ void HashAccelList< T >::insert( typename list< T >::iterator new_item_it, const
 	{
 		indexing.insert( make_pair( val, new_item_it ) );
 	}
+}
+
+template <typename T>
+void HashAccelList< T >::insert( typename HashAccelList< T >::h_iterator it, const T& val )
+{
+
 }
 
 template <typename T>
