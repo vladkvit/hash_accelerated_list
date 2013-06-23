@@ -7,4 +7,10 @@ class MultiHashAccelList
 {
 public:
 	MultiHashAccelList() {}
+
+private:
+	list< T > ordered_list;
+
+	//HashAccelList< typename list< T >::iterator > test;
+	//unordered_map< T, typename HashAccelList< typename list< T >::iterator > > indexing;
 };

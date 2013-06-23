@@ -21,8 +21,8 @@ public:
 
 	//the inserts are O(1), they also remove the previous instance of the parameter
 	void HashAccelList< T >::insert( typename list< T >::iterator, const T& );
-	void insert_end( const T& );
-	void insert_begin( const T& );
+	void push_back( const T& );
+	void push_front( const T& );
 
 	void remove( const T& ); //O(1)
 
@@ -137,14 +137,14 @@ void HashAccelList< T >::insert( typename HashAccelList< T >::h_iterator positio
 #endif
 
 template <typename T>
-void HashAccelList< T >::insert_begin( const T& val )
+void HashAccelList< T >::push_front( const T& val )
 {
 	list< T >::iterator new_item_it = ordered_list.begin();
 	insert( new_item_it, val );
 }
 
 template <typename T>
-void HashAccelList< T >::insert_end( const T& val )
+void HashAccelList< T >::push_back( const T& val )
 {
 	list< T >::iterator new_item_it = ordered_list.end();
 	insert( new_item_it, val );
